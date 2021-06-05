@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+}
+a{
+    text-decoration: none;
+}
+
+body{
+    background-color: #f2f2f2;
+    background-image: url("https://www.transparenttextures.com/patterns/batthern.png");
+}
+
+.container{
+    background-color: #17e1f7;
+}
+
+/* Header */
+
+.comp-name{
+    color: #9e4ee0;
+    font-size: 3.5rem;
+    margin-left: 3rem;
+    margin-top: 1.5rem;
+    font-family: 'Libre Baskerville', serif;
+}
+
+.logo {
+    width: 7.5rem;
+    height: auto;
+    justify-self: left;
+    margin-left: 1.5rem;
+}
+
+.link{
+    color: #9e4ee0;
+    font-size: 1.5rem;
+    font-family: 'Libre Baskerville', serif;
+}
+
+.link:hover{
+    color: #e04ed9;
+}
+
+/* Footer */
+footer{   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+}
+
+.foot-logo{
+    width: 5rem;
+    height: auto;
+}

@@ -1,0 +1,16 @@
+<%- include('partials/header'); -%> 
+
+<div class="container">
+    <div class="home-message">
+        <h2>The Med Portal</h2>
+        <p>Welcome to the Med Portal for all your medical needs covered!</p>
+    </div>
+    <div class="weather-panel">
+        <h4>Todays Weather in <% cName %></h4>
+        <h4>The Tempeture is <% temp %> </h4>
+        <p><% dWeather %> </p>
+        <img src=<% imgIcon %>   alt="weather icon">
+    </div>
+</div>
+
+<%- include('partials/footer', {Copyright: CR}); %> 
