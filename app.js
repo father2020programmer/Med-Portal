@@ -3,8 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const ejs = require('ejs');
 const https = require('https');
+const superagent = require('superagent');
 const bodyParser = require('body-parser');
-const { response } = require('express');
+const fs = require('./functions');
 const copyright = new Date().getFullYear()
 
 /////// App Configure /////// 
@@ -12,45 +13,41 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
+const ipApiKey = process.env.IP_API_KEY;
 
 ////// App Main Pages//////
-app.get('/', (req, res) => {
+app.get('/', (req, res) => {    
+
+    ////// get weather information at ip location ///////
+    function getRawData(){
+        return new Promise((resolve, reject) =>{
+            https.get('https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey, res => {
+                console.log('statusCode:', res.statusCode);
     
-    const urlIP = 'https://ip-api.com/json/?fields=status,city,query';    
-
-    https.get(urlIP, response => {        
-        response.on('data', data =>{
-            const ipData = JSON.parse(data);
-            var status = ipData.status;
-            var cityN = ipData.city
-            
-            if(status  == 'fail'){
-                cityN = 'Paris';
-            }
-            
-            const cityName = cityN;
-            const apiKey = process.env.API_KEY;
-            const units = "imperial";
-            const urlWeather = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',us&appid=' + apiKey + '&units=' + units;
-
-            https.get(urlWeather, respon => {
-                console.log(respon.statusCode);
-                
-                respon.on('data', data => {
-                    const wData = JSON.parse(data);
-                    var city = wData.name;
-                    var cTemp = wData.main.temp;
-                    var description = wData.weather[0].description;
-                    var icon = wData.weather[0].icon;
-                    var imgIcon = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
-
-                    res.render('home', {CR: copyright, cName: city, temp: cTemp, dWeather: description, imgIcon: imgIcon});
+                res.on('data', d => {
+                    let data = JSON.parse(d);
+                    let cData = data.city
+                    resolve(cData);
+                }).on('error', e =>{
+                    reject('error'. e.message);
                 });
             });
         });
-    });
+    }
     
+    function getIp(){
+        getRawData().then(data =>{
+            return data;
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+
+    console.log(getIp());
     
+
+
+    res.render('home', {CR: copyright});    
 });
 
 app.get('/locations', (req, res) =>{
