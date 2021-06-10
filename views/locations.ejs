@@ -1,3 +1,30 @@
-<%- include('partials/header'); -%> 
+<%- include('partials/header'); -%>
+
+<div class="container">
+
+<% medLoc.forEach(loc => { %>
+    <div class="loc_panel">
+        <h3 class="loc_name"><%= loc.name %> </h3>
+        <p class="loc_address"><i class="fas fa-map-marker-alt"></i>  <%= loc.address %> </p>
+        <iframe width="450" height="250" frameborder="0" style="border:0"
+            src="https://www.google.com/maps/embed/v1/place?key=<% mapKey %>&q=11101+172nd+st+E," >
+        </iframe>
+
+        <div class="loc_hours_panel">
+        <p>Hours Open</p>
+        <ul class="loc_list_hours">
+            <li>Saturdat <%= loc.hours[0] %> </li>
+            <li>Monday: <%= loc.hours[1] %> </li>
+            <li>Tuesday: <%= loc.hours[2] %> </li>
+            <li>Wednesday: <%= loc.hours[3] %> </li>
+            <li>Thursday: <%= loc.hours[4] %> </li>
+            <li>Friday: <%= loc.hours[5] %> </li>
+            <li>Sunday: <%= loc.hours[6] %> </li>
+        </ul>
+        </div>        
+    </div>
+<%  }); %> 
+
+</div>
 
 <%- include('partials/footer', {Copyright: CR}); %> 

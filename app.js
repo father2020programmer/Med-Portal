@@ -6,6 +6,7 @@ const https = require('https');
 const superagent = require('superagent');
 const bodyParser = require('body-parser');
 const fs = require('./functions');
+const mongoose = require('mongoose');
 const copyright = new Date().getFullYear()
 
 /////// App Configure /////// 
@@ -13,45 +14,64 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
-const ipApiKey = process.env.IP_API_KEY;
+const mapKey = process.env.MAP_KEY;
+
+/////DataBase Config////
+mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true)
+mongoose.connect("mongodb+srv://Randy_Wilkins:Test1234@cluster0.td7ri.mongodb.net/Med_Portal", {useNewUrlParser: true});
+
+const locationScheme = new mongoose.Schema({
+    name: String,
+    address: String,
+    hours: Array
+}, {collection: 'MD_Location'});
+
+const MD_Location = new mongoose.model('MD_Location', locationScheme);
+
 
 ////// App Main Pages//////
 app.get('/', (req, res) => {    
 
     ////// get weather information at ip location ///////
-    function getRawData(){
-        return new Promise((resolve, reject) =>{
-            https.get('https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey, res => {
-                console.log('statusCode:', res.statusCode);
+    // function getRawData(){
+    //     return new Promise((resolve, reject) =>{
+    //         https.get('https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey, res => {
+    //             console.log('statusCode:', res.statusCode);
     
-                res.on('data', d => {
-                    let data = JSON.parse(d);
-                    let cData = data.city
-                    resolve(cData);
-                }).on('error', e =>{
-                    reject('error'. e.message);
-                });
-            });
-        });
-    }
+    //             res.on('data', d => {
+    //                 let data = JSON.parse(d);
+    //                 let cData = data.city
+    //                 resolve(cData);
+    //             }).on('error', e =>{
+    //                 reject('error'. e.message);
+    //             });
+    //         });
+    //     });
+    // }
     
-    function getIp(){
-        getRawData().then(data =>{
-            return data;
-        }).catch(error => {
-            console.log(error);
-        });
-    }
+    // function getIp(){
+    //     getRawData().then(data =>{
+    //         return data;
+    //     }).catch(error => {
+    //         console.log(error);
+    //     });
+    // }
 
-    console.log(getIp());
+    // console.log(getIp());
     
 
 
     res.render('home', {CR: copyright});    
 });
 
+
+
 app.get('/locations', (req, res) =>{
-    res.render('locations', {CR: copyright});
+    MD_Location.find({}, (err, foundLocations) => {
+        res.render('locations', {CR: copyright, medLoc: foundLocations, mapKey: mapKey});
+    }) 
+    
 });
 
 app.get('/services', (req, res) =>{

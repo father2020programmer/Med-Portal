@@ -1,6 +1,9 @@
 * {
     margin: 0;
 }
+ul {
+    list-style: none;
+}
 a{
     text-decoration: none;
 }
@@ -53,4 +56,22 @@ footer{
 .foot-logo{
     width: 5rem;
     height: auto;
+}
+
+/* Location Page */
+
+.loc_panel{
+    color: #9e4ee0;
+    margin-left: 20px;
+    margin-bottom: 50px;
+    font-family: 'Libre Baskerville', serif;
+}
+
+.loc_address{
+    font-size: larger;
+}
+
+.loc_hours_panel{
+    text-align: right;
+    margin-bottom: 30px;
 }

@@ -16,37 +16,37 @@ const apiKey = process.env.API_KEY;
 const units = "imperial";
 const urlWeather = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',us&appid=' + apiKey + '&units=' + units;
 
-function getRawData(){
-    const https = require('https');
-    return new Promise((resolve, reject) =>{
-        https.get('https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey, res => {
-            console.log('statusCode:', res.statusCode);
+// function getRawData(){
+//     const https = require('https');
+//     return new Promise((resolve, reject) =>{
+//         https.get('https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey, res => {
+//             console.log('statusCode:', res.statusCode);
 
-            res.on('data', d => {
-                let data = JSON.parse(d);
-                let cData = data.city
-                resolve(cData);
-            }).on('error', e =>{
-                reject('error'. e.message);
-            });
-        });
-    });
-}
+//             res.on('data', d => {
+//                 let data = JSON.parse(d);
+//                 let cData = data.city
+//                 resolve(cData);
+//             }).on('error', e =>{
+//                 reject('error'. e.message);
+//             });
+//         });
+//     });
+// }
 
-function getIp(){
-    getRawData().then(data =>{
-        return data;
-    }).catch(error => {
-        console.log(error);
-    });
-}
+// function getIp(){
+//     getRawData().then(data =>{
+//         return data;
+//     }).catch(error => {
+//         console.log(error);
+//     });
+// }
 
-async function getIPAddress(){
-    let data = await fetch('https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey)
-    .then(res => res.json())
-    .then(res => {return res});
+// async function getIPAddress(){
+//     let data = await fetch('https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey)
+//     .then(res => res.json())
+//     .then(res => {return res});
 
-    return data;
-}
+//     return data;
+// }
 
-module.exports = {getIp};
+//module.exports = {getIp};
