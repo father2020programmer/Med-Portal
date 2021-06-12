@@ -3,11 +3,11 @@ require('dotenv').config();
 const express = require('express');
 const ejs = require('ejs');
 const https = require('https');
-const superagent = require('superagent');
 const bodyParser = require('body-parser');
 const fs = require('./functions');
 const mongoose = require('mongoose');
-const copyright = new Date().getFullYear()
+const _ = require('lodash');
+
 
 /////// App Configure /////// 
 const app = express();
@@ -15,6 +15,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 const mapKey = process.env.MAP_KEY;
+const copyright = new Date().getFullYear()
 
 /////DataBase Config////
 mongoose.set('useFindAndModify', false);
@@ -24,7 +25,8 @@ mongoose.connect("mongodb+srv://Randy_Wilkins:Test1234@cluster0.td7ri.mongodb.ne
 const locationScheme = new mongoose.Schema({
     name: String,
     address: String,
-    hours: Array
+    hours: Array,
+    imgURL: String
 }, {collection: 'MD_Location'});
 
 const MD_Location = new mongoose.model('MD_Location', locationScheme);
@@ -68,8 +70,11 @@ app.get('/', (req, res) => {
 
 
 app.get('/locations', (req, res) =>{
+    const mapKey = process.env.MAP_KEY;
+    const mapUrl = "https://www.google.com/maps/embed/v1/static?key=" + mapKey + "&q="
+
     MD_Location.find({}, (err, foundLocations) => {
-        res.render('locations', {CR: copyright, medLoc: foundLocations, mapKey: mapKey});
+        res.render('locations', {CR: copyright, medLoc: foundLocations, map: mapUrl});
     }) 
     
 });
@@ -80,6 +85,23 @@ app.get('/services', (req, res) =>{
 
 app.get('/myChart', (req, res) => {
     res.render('myChart', {CR: copyright});
+});
+
+app.get('/clinic/:clinicID', (req, res) => {
+    const clinicId = req.params.clinicID;
+    const arrayDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saterday'];
+
+    MD_Location.find({_id: clinicId}, (err, clinics) =>{
+        if(err){
+            console.log(err);
+        }else {
+            let location = clinics[0].address.replace(/\s+/g, '20%');
+            const mapUrl = "https://www.google.com/maps/embed/v1/static?key=" + mapKey + "&q=" + location;
+            
+            res.render('clinic', {CR: copyright, clinic: clinics, day: arrayDays, mapLoc: mapUrl});
+        }
+    });
+
 });
 
 

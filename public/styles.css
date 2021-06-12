@@ -15,6 +15,7 @@ body{
 
 .container{
     background-color: #17e1f7;
+    color: #9e4ee0;
 }
 
 /* Header */
@@ -41,11 +42,14 @@ body{
 }
 
 .link:hover{
-    color: #e04ed9;
+    color: #e04ed9
 }
 
+
 /* Footer */
-footer{   
+footer{ 
+    padding-top: 5rem;
+    padding-bottom: .5rem;  
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,20 +62,92 @@ footer{
     height: auto;
 }
 
+.link.footLink{
+    font-size: 1rem;
+}
+
 /* Location Page */
 
+.loc_container{
+    padding-bottom: 6rem;
+}
+
 .loc_panel{
-    color: #9e4ee0;
-    margin-left: 20px;
-    margin-bottom: 50px;
+    width: 30rem;
+    height: 15rem;
+    margin: 4rem auto 10px auto;
     font-family: 'Libre Baskerville', serif;
+    position: relative;
+    text-align: center;
 }
 
-.loc_address{
-    font-size: larger;
+.loc_name{
+    color: #9e4ee0;
+    font-size: 2.5rem;
+    font-weight: 600;
+    padding-top: 1rem;
 }
 
-.loc_hours_panel{
-    text-align: right;
-    margin-bottom: 30px;
+.loc_name:hover{
+    color: #e04ed9
+}
+
+.loc_img{
+    border: 3px black solid;
+    width: 15rem;
+    height: auto;
+    margin: 2rem 0 1rem 0;
+}
+
+/* Clinic Page */
+
+.cli_panel{
+    padding: 3rem 0 10rem 0;
+}
+
+.cli_title_panel{
+    width: 27rem;
+    height: auto;
+    padding: 3rem 0 3rem 2rem;
+    margin-left: 5rem;
+    position: relative;
+}
+
+.marker{
+    font-size: 2rem;
+}
+
+.cli_add{
+    position: relative;
+    left: 40px;
+    top: -30px;
+}
+
+.cli_img{
+    width: 35rem;
+    height: auto;
+    padding: 0 2rem 0 0;
+    margin-right: 5rem;
+    float: right;
+    position: relative;
+    top: -10rem;
+}
+
+.cli_second_panel{
+    text-align: center;
+    position: relative;
+    left: -60px;
+}
+
+.cli_hour_panel{
+    width: 35rem;
+    height: auto;
+    padding: 1rem 0 3rem 2rem;
+    margin-left: 5rem;
+    position: relative;
+}
+
+.cli_hour{
+    font-weight: 600;    
+    margin-top: 1rem;
 }

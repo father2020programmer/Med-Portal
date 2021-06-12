@@ -1,0 +1,21 @@
+<%- include('partials/header'); -%>
+
+<div class="container cli_panel"> 
+    <div class="cli_title_panel">   
+        <h1 class="cli_title"><%= clinic[0].name %> </h1>
+        <i class="fas fa-map-marker-alt marker"></i><h3 class="cli_add"><%= clinic[0].address %> </h3>
+    </div>
+    <img class="cli_img" src=<%= clinic[0].imgURL %>  alt="clinic img">
+    <div class="cli_second_panel">
+        <h3 class="cli_second_title">Open Hours</h3>
+        <div class="cli_hour_panel row row-cols-2">
+            <% console.log(mapLoc) %>         
+            <% for( let i = 0; i < clinic[0].hours.length; i++ ) { %>
+                <p class="cli_hour"><%= day[i] %>: <%= clinic[0].hours[i] %></p>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+
+<%- include('partials/footer', {Copyright: CR}); %> 
