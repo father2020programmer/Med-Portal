@@ -26,7 +26,9 @@ const locationScheme = new mongoose.Schema({
     name: String,
     address: String,
     hours: Array,
-    imgURL: String
+    imgURL: String,
+    mapURL: String,
+    services: Array
 }, {collection: 'MD_Location'});
 
 const MD_Location = new mongoose.model('MD_Location', locationScheme);
@@ -70,11 +72,9 @@ app.get('/', (req, res) => {
 
 
 app.get('/locations', (req, res) =>{
-    const mapKey = process.env.MAP_KEY;
-    const mapUrl = "https://www.google.com/maps/embed/v1/static?key=" + mapKey + "&q="
-
+    
     MD_Location.find({}, (err, foundLocations) => {
-        res.render('locations', {CR: copyright, medLoc: foundLocations, map: mapUrl});
+        res.render('locations', {CR: copyright, medLoc: foundLocations});
     }) 
     
 });
@@ -93,26 +93,15 @@ app.get('/clinic/:clinicID', (req, res) => {
 
     MD_Location.find({_id: clinicId}, (err, clinics) =>{
         if(err){
+
             console.log(err);
         }else {
-            let location = clinics[0].address.replace(/\s+/g, '20%');
-            const mapUrl = "https://www.google.com/maps/embed/v1/static?key=" + mapKey + "&q=" + location;
-            
-            res.render('clinic', {CR: copyright, clinic: clinics, day: arrayDays, mapLoc: mapUrl});
+
+            res.render('clinic', {CR: copyright, clinic: clinics, day: arrayDays});
         }
     });
 
 });
-
-
-
-
-
-
-
-
-
-
 
 
 
