@@ -1,6 +1,39 @@
-<%- include('partials/header'); -%> 
+<%- include('partials/header'); -%>
+
+
 
 <div class="container">
+    <div class="wet-panel">
+        <div class='wet-title'>
+            <h3><%= cityName %> </h3>
+        </div>
+        <div class="for-daycast">
+            <div class="today-cast">
+                <h6>Today</h6>
+                <p><%= todayT %> </p>
+                <p><%= todayM %> </p>
+                <p><%= todayD %> </p>
+            </div>
+            <div class="tom-cast">
+                <h6>Tomorrow</h6>
+                <p><%= tomT %> </p>
+                <p><%= tomM %> </p>
+                <p><%= tomD %> </p>
+            </div>
+            <div class="today-cast">
+                <h6>Then</h6>
+                <p><%= next1T %> </p>
+                <p><%= next1M %> </p>
+                <p><%= next1D %> </p>
+            </div>
+            <div class="today-cast">
+                <h6>Finally</h6>
+                <p><%= next2T %> </p>
+                <p><%= next2M %> </p>
+                <p><%= next2D %> </p>
+            </div>
+        </div>
+    </div>
     <div class="home-message">
         <h2>The Med Portal</h2>
         <p>Welcome to the Med Portal for all your medical needs covered!</p>

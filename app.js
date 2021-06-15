@@ -6,7 +6,9 @@ const https = require('https');
 const bodyParser = require('body-parser');
 const fs = require('./functions');
 const mongoose = require('mongoose');
-const _ = require('lodash');
+const superagent = require('superagent');
+const fetch = require('node-fetch');
+const { json } = require('express');
 
 
 /////// App Configure /////// 
@@ -14,7 +16,6 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
-const mapKey = process.env.MAP_KEY;
 const copyright = new Date().getFullYear()
 
 /////DataBase Config////
@@ -35,38 +36,54 @@ const MD_Location = new mongoose.model('MD_Location', locationScheme);
 
 
 ////// App Main Pages//////
-app.get('/', (req, res) => {    
+app.get('/', (req, res) => {
 
-    ////// get weather information at ip location ///////
-    // function getRawData(){
-    //     return new Promise((resolve, reject) =>{
-    //         https.get('https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey, res => {
-    //             console.log('statusCode:', res.statusCode);
+    const ipApiKey = process.env.IP_API_KEY;
+    const ipUrl = 'https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey;
+
+    function requestIP(url){
+        return fetch(url)
+        .then(r => r.json())
+        .then(json => json);
+    }   
     
-    //             res.on('data', d => {
-    //                 let data = JSON.parse(d);
-    //                 let cData = data.city
-    //                 resolve(cData);
-    //             }).on('error', e =>{
-    //                 reject('error'. e.message);
-    //             });
-    //         });
-    //     });
-    // }
+    requestIP(ipUrl).then(data =>{
+        const part ='hourly,alerts,minutely';
+        const lat = data.latitude;
+        const lon = data.longitude;
+        const name = data.city;
+        const apiKey = process.env.WEATHER_API_KEY;
+        const units = "imperial";
+        const urlWeather = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=' + units + '&exclude=' + part + '&appid=' + apiKey;
+
+        fetch(urlWeather)
+        .then(r => r.json())
+        .then(json =>{
+            let todayW = json.current;
+            let tomW = json.daily[0];
+            let n1Day = json.daily[1];
+            let n2Day = json.daily[2];
+
+           res.render('home', {
+                CR: copyright, 
+                cityName: name, 
+                todayT: todayW.temp,
+                todayM: todayW.weather[0].main,
+                todayD: todayW.weather[0].description,
+                tomT: tomW.temp.day,
+                tomM: tomW.weather[0].main,
+                tomD: tomW.weather[0].description,
+                next1T: n1Day.temp.day,
+                next1M: n1Day.weather[0].main,
+                next1D: n1Day.weather[0].description,
+                next2T: n2Day.temp.day,
+                next2M: n2Day.weather[0].main,
+                next2D: n2Day.weather[0].description,                
+            });
+        });
+
+    });
     
-    // function getIp(){
-    //     getRawData().then(data =>{
-    //         return data;
-    //     }).catch(error => {
-    //         console.log(error);
-    //     });
-    // }
-
-    // console.log(getIp());
-    
-
-
-    res.render('home', {CR: copyright});    
 });
 
 
