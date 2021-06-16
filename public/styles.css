@@ -16,6 +16,8 @@ body{
 .container{
     background-color: #17e1f7;
     color: #9e4ee0;
+    font-family: 'Libre Baskerville', serif;
+    padding-bottom: 3rem;
 }
 
 /* Header */
@@ -64,6 +66,27 @@ footer{
 
 .link.footLink{
     font-size: 1rem;
+}
+
+/* Home Page */
+
+.wet-title{
+    text-align: center;
+}
+
+.forcast-panel{
+    display: flex;
+    justify-content: center;
+    border: solid 2px;
+}
+
+.day-cast{
+    margin: 1rem auto 1rem auto;
+}
+
+.cast-img {
+    width: 3rem;
+    height: auto;
 }
 
 /* Location Page */
@@ -200,4 +223,54 @@ footer{
 .services{
     font-size: 1.15rem;
     font-weight: 550;
+}
+
+/* MyChart page */
+
+.title_panel{
+    margin: 0;
+}
+
+.title{
+    font-size: 4rem;
+    margin: auto;
+    text-align: center;
+}
+
+.chart-img{
+    width: 37rem;
+    height: auto;
+    margin: 8rem 0 0 2rem;
+    border: 2px solid;
+    opacity: 0.8;
+}
+
+.open-panel{
+    font-size: 1.75rem;
+    padding: 8rem 2rem 2rem 0;
+    float: right;
+}
+
+.signUp{
+    width: 100%;
+    height: auto;
+    margin: 20rem 0 3rem 5rem ;
+}
+
+.signUp h3{
+    font-size: 2.5rem;
+    padding-bottom: 2rem;
+}
+
+.signUp button{
+    background-color: #9e4ee0;
+    font-size: 1rem;
+    width: 20rem;
+    height: 2.5rem;
+    margin-left: 3rem;
+}
+
+.signUp button:hover{
+    background-color: #e04ed9;
+    color: #f2f2f2;
 }

@@ -7,29 +7,29 @@
         <div class='wet-title'>
             <h3><%= cityName %> </h3>
         </div>
-        <div class="for-daycast">
-            <div class="today-cast">
-                <h6>Today</h6>
+        <div class="forcast-panel">
+            <div class="day-cast">
+                <h4><%= dayDate.month %>, <%= dayDate.day %></h4>
+                <img class="cast-img" src="http://openweathermap.org/img/wn/<%= todayI %>@2x.png" alt="weather-icon"> 
                 <p><%= todayT %> </p>
-                <p><%= todayM %> </p>
                 <p><%= todayD %> </p>
             </div>
-            <div class="tom-cast">
-                <h6>Tomorrow</h6>
+            <div class="day-cast">
+                <h4><%= dayDate.month %>, <%= dayDate.day + 1 %> </h4>
+                <img class="cast-img" src="http://openweathermap.org/img/wn/<%= tomI %>@2x.png" alt="weather-icon"> 
                 <p><%= tomT %> </p>
-                <p><%= tomM %> </p>
                 <p><%= tomD %> </p>
             </div>
-            <div class="today-cast">
-                <h6>Then</h6>
+            <div class="day-cast">
+                <h4><%= dayDate.month %>, <%= dayDate.day + 2 %> </h4>
+                <img class="cast-img" src="http://openweathermap.org/img/wn/<%= next1I %>@2x.png" alt="weather-icon"> 
                 <p><%= next1T %> </p>
-                <p><%= next1M %> </p>
                 <p><%= next1D %> </p>
             </div>
-            <div class="today-cast">
-                <h6>Finally</h6>
+            <div class="day-cast">
+                <h4><%= dayDate.month %>, <%= dayDate.day + 3 %> </h4>
+                <img class="cast-img" src="http://openweathermap.org/img/wn/<%= next2I %>@2x.png" alt="weather-icon"> 
                 <p><%= next2T %> </p>
-                <p><%= next2M %> </p>
                 <p><%= next2D %> </p>
             </div>
         </div>

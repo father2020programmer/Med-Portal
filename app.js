@@ -38,8 +38,8 @@ const MD_Location = new mongoose.model('MD_Location', locationScheme);
 ////// App Main Pages//////
 app.get('/', (req, res) => {
 
-    const ipApiKey = process.env.IP_API_KEY;
-    const ipUrl = 'https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey;
+    //const ipApiKey = process.env.IP_API_KEY;
+    //const ipUrl = 'https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey;
 
     function requestIP(url){
         return fetch(url)
@@ -63,21 +63,23 @@ app.get('/', (req, res) => {
             let tomW = json.daily[0];
             let n1Day = json.daily[1];
             let n2Day = json.daily[2];
+            let todayDate = fs.todaysDate();
 
-           res.render('home', {
+           res.render('home', {               
                 CR: copyright, 
+                dayDate: todayDate,
                 cityName: name, 
                 todayT: todayW.temp,
-                todayM: todayW.weather[0].main,
+                todayI: todayW.weather[0].icon,
                 todayD: todayW.weather[0].description,
                 tomT: tomW.temp.day,
-                tomM: tomW.weather[0].main,
+                tomI: tomW.weather[0].icon,
                 tomD: tomW.weather[0].description,
                 next1T: n1Day.temp.day,
-                next1M: n1Day.weather[0].main,
+                next1I: n1Day.weather[0].icon,
                 next1D: n1Day.weather[0].description,
                 next2T: n2Day.temp.day,
-                next2M: n2Day.weather[0].main,
+                next2I: n2Day.weather[0].icon,
                 next2D: n2Day.weather[0].description,                
             });
         });
@@ -102,6 +104,10 @@ app.get('/services', (req, res) =>{
 
 app.get('/myChart', (req, res) => {
     res.render('myChart', {CR: copyright});
+});
+
+app.get('/login', (req, res) => {
+    res.render('login', {CR: copyright});
 });
 
 app.get('/clinic/:clinicID', (req, res) => {
