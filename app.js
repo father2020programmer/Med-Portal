@@ -5,8 +5,8 @@ const ejs = require('ejs');
 const https = require('https');
 const bodyParser = require('body-parser');
 const fs = require('./functions');
+const schemas = require('./schemas');
 const mongoose = require('mongoose');
-const superagent = require('superagent');
 const fetch = require('node-fetch');
 const { json } = require('express');
 
@@ -16,26 +16,19 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
-const copyright = new Date().getFullYear()
+
 
 /////DataBase Config////
 mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true)
 mongoose.connect("mongodb+srv://Randy_Wilkins:Test1234@cluster0.td7ri.mongodb.net/Med_Portal", {useNewUrlParser: true});
 
-const locationScheme = new mongoose.Schema({
-    name: String,
-    address: String,
-    hours: Array,
-    imgURL: String,
-    mapURL: String,
-    services: Array
-}, {collection: 'MD_Location'});
-
-const MD_Location = new mongoose.model('MD_Location', locationScheme);
+///// Set up Mongoose models/////
+const MD_Location = new mongoose.model('MD_Location', schemas.locations);
+const Patient = new mongoose.model('Patients', schemas.patients);
+const Employee = new mongoose.model('Employees', schemas.employees);
 
 
-////// App Main Pages//////
 app.get('/', (req, res) => {
 
     //const ipApiKey = process.env.IP_API_KEY;
@@ -66,7 +59,7 @@ app.get('/', (req, res) => {
             let todayDate = fs.todaysDate();
 
            res.render('home', {               
-                CR: copyright, 
+                CR: fs.getCopyRights(), 
                 dayDate: todayDate,
                 cityName: name, 
                 todayT: todayW.temp,
@@ -93,21 +86,21 @@ app.get('/', (req, res) => {
 app.get('/locations', (req, res) =>{
     
     MD_Location.find({}, (err, foundLocations) => {
-        res.render('locations', {CR: copyright, medLoc: foundLocations});
+        res.render('locations', {CR: fs.getCopyRights(), medLoc: foundLocations});
     }) 
     
 });
 
 app.get('/services', (req, res) =>{
-    res.render('services', {CR: copyright});
+    res.render('services', {CR: fs.getCopyRights()});
 });
 
 app.get('/myChart', (req, res) => {
-    res.render('myChart', {CR: copyright});
+    res.render('myChart', {CR: fs.getCopyRights()});
 });
 
 app.get('/login', (req, res) => {
-    res.render('login', {CR: copyright});
+    res.render('login', {CR: fs.getCopyRights()});
 });
 
 app.get('/clinic/:clinicID', (req, res) => {
@@ -120,7 +113,7 @@ app.get('/clinic/:clinicID', (req, res) => {
             console.log(err);
         }else {
 
-            res.render('clinic', {CR: copyright, clinic: clinics, day: arrayDays});
+            res.render('clinic', {CR: fs.getCopyRights(), clinic: clinics, day: arrayDays});
         }
     });
 

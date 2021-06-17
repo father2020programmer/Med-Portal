@@ -9,5 +9,10 @@ function todaysDate(){
     return {month, day};
 }
 
+function getCopyRights(){
+    const copyright = new Date().getFullYear()
+    return copyright;
+}
 
-module.exports = {todaysDate};
+
+module.exports = {todaysDate, getCopyRights};
