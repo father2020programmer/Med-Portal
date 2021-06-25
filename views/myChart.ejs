@@ -1,22 +1,47 @@
 <%- include('partials/header'); -%> 
 
 <div class="container">
-    <div class="title-panel">
+    <div class="full-page">   
         <h2 class="title"> Welcome to MyChart</h2>
-        <img class="chart-img" src="/images/chart_img.jpg" alt="doctor image">
-        <ul class="open-panel">
-            <li>Easy access for both patient and provider,</li>
-            <li>Providers and patients to connect.</li>
-            <li>An easy to read recorded system.</li>
-            <li>Access to labs and subcriptions.</li>
-            <li>Easy sytem to schedule appointments.</li>
-        </ul>
-    </div>
-    <div class="signUp">
-        <h3>Get access to your chart now!</h3>
-        <a href="/login">
-        <button class="login_signup">Log In/ Sign Up</button></a>
-    </div>
+        <div class="first-panel">
+            <div class="login_form">       
+                <div>
+                    <form action="/login" method="post">
+                        <h3>Please SignIn</h3>
+                        <div class="form-floating mb-2">            
+                            <input type="text" class="form-control" name="userName" placeholder="User Name">
+                            <label for="user">User Name</label>
+                        </div>
+                        <div class="form-floating">                
+                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <label for="password">Password</label>
+                            </div>
+                        </div>                    
+                        <button type="submit" class="btn login_signup">Login</button>           
+                    </form>
+                </div>
+                <img class="first-img" src="/images/family-using-computer.jpg" alt="family using computer">
+            </div>
+            <h2 class="second-title title">Looking to Sign Up?</h2>                           
+            <div class="second-panel">                
+                <img class="chart-img" src="/images/chart_img.jpg" alt="doctor image">
+                <ul class="open-panel">
+                    <li>Easy access for both patient and provider.</li>
+                    <li>Providers and patients to connect.</li>
+                    <li>An easy to read recorded system.</li>
+                    <li>Access to labs and subcriptions.</li>
+                    <li>Easy sytem to schedule appointments.</li>
+                </ul>                
+            </div>
+            <div class="third-panel">
+                <div class="signUp">
+                    <h3>Sign Up Today!</h3>
+                    <a href="/login/signUp">
+                    <button class="btn login_signup">Sign Up</button></a>
+                </div>
+            </div>
+        </div>
+    </div>    
 </div>
 
 <%- include('partials/footer', {Copyright: CR}); %> 

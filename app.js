@@ -27,6 +27,7 @@ mongoose.connect("mongodb+srv://Randy_Wilkins:Test1234@cluster0.td7ri.mongodb.ne
 const MD_Location = new mongoose.model('MD_Location', schemas.locations);
 const Patient = new mongoose.model('Patients', schemas.patients);
 const Employee = new mongoose.model('Employees', schemas.employees);
+const User = new mongoose.model('Users', schemas.users);
 
 
 app.get('/', (req, res) => {
@@ -99,8 +100,8 @@ app.get('/myChart', (req, res) => {
     res.render('myChart', {CR: fs.getCopyRights()});
 });
 
-app.get('/login', (req, res) => {
-    res.render('login', {CR: fs.getCopyRights()});
+app.get('/login/signUp', (req, res) => {
+    res.render('signUp', {CR: fs.getCopyRights(),});
 });
 
 app.get('/clinic/:clinicID', (req, res) => {
@@ -120,17 +121,11 @@ app.get('/clinic/:clinicID', (req, res) => {
 });
 
 
+////////POST////////
 
+app.post('/login', (req, res) =>{
 
-
-
-
-
-
-
-
-
-
+});
 
 
 ///// App Server/////

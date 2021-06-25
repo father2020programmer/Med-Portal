@@ -1,33 +1,37 @@
 <%- include('partials/header'); -%>
 
-<div class="container cli_panel"> 
-    <div class="cli_title_panel">   
-        <h1 class="cli_title"><%= clinic[0].name %> </h1>
-        <i class="fas fa-map-marker-alt marker"></i><h3 class="cli_add"><%= clinic[0].address %> </h3>
-    </div>
-    <a href="https://www.google.com/search?q=<%= clinic[0].address %> " target="_blank">
-        <img class="cli_map" src=<%= clinic[0].mapURL %>  alt="Map Image">
-        <div class="directions">
-            <h4>CLick For Directions!</h4>
+<div class="container"> 
+    <div class="full-page">
+        <div class="cli_title_panel">   
+            <h1 class="cli_title"><%= clinic[0].name %> </h1>
+            <i class="fas fa-map-marker-alt marker"></i><h3 class="cli_add"><%= clinic[0].address %> </h3>
         </div>
-    </a>        
-    <div class="cli_second_panel">
-        <h3 class="cli_second_title">Open Hours</h3>
-        <div class="cli_hour_panel row row-cols-2">        
-            <% for( let i = 0; i < clinic[0].hours.length; i++ ) { %>
-                <p class="cli_hour"><%= day[i] %>: <%= clinic[0].hours[i] %></p>
-            <% } %>
-        </div>
-    </div>
-    <div class="cli_services_panel">
-        <img class="cli_service_img" src=<%= clinic[0].imgURL %>  alt="Clinic Image" >        
-        <div class="cli_services">
-            <h3 class="cli_third_title">Services Provided:</h3>
-            <% clinic[0].services.forEach( s => { %>
-                <p class="services"><%= s %></p>             
-            <% }) %>
-            <p class="services">Many More...</p>
+        <div class="map-panel">
+            <a href="https://www.google.com/search?q=<%= clinic[0].address %> " target="_blank">
+                <img class="cli_map" src=<%= clinic[0].mapURL %>  alt="Map Image">
+                <div class="directions">
+                    <h4>CLick For Directions!</h4>
+                </div>
+            </a>
         </div>        
+        <div class="cli_second_panel">
+            <h3 class="cli_second_title">Open Hours</h3>
+            <div class="cli_hour_panel row row-cols-2">        
+                <% for( let i = 0; i < clinic[0].hours.length; i++ ) { %>
+                    <p class="cli_hour"><%= day[i] %>: <%= clinic[0].hours[i] %></p>
+                <% } %>
+            </div>
+        </div>
+        <div class="cli_services_panel">
+            <img class="cli_service_img" src=<%= clinic[0].imgURL %>  alt="Clinic Image" >        
+            <div class="cli_services">
+                <h3 class="cli_third_title">Services Provided:</h3>
+                <% clinic[0].services.forEach( s => { %>
+                    <p class="services"><%= s %></p>             
+                <% }) %>
+                <p class="services">Many More...</p>
+            </div>        
+        </div>
     </div>
 </div>
 

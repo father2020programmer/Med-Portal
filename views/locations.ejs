@@ -1,15 +1,17 @@
 <%- include('partials/header'); -%>
 
-<div class="container loc_container">
-    <h1 class="title">Locations</h1>
-    <div class="row row-cols-3">
-<% medLoc.forEach(loc => { %> 
-    <div class="col loc_panel">
-        <img class="loc_img" src=<%= loc.imgURL %> alt="map">
-        <a href="/clinic/<%= loc.id %> "><h3 class="loc_name"><%= loc.name %></h3></a>
-        <p class="loc_address"><i class="fas fa-map-marker-alt"></i>  <%= loc.address %> </p>              
-    </div>
-<%  }); %>
+<div class="container">
+    <div class="full-page">
+        <h1 class="title">Locations</h1>
+        <div class="row row-cols-3">
+        <% medLoc.forEach(loc => { %> 
+            <div class="col loc_panel">
+                <img class="loc_img" src=<%= loc.imgURL %> alt="map">
+                <a href="/clinic/<%= loc.id %> "><h3 class="loc_name"><%= loc.name %></h3></a>
+                <p class="loc_address"><i class="fas fa-map-marker-alt"></i>  <%= loc.address %> </p>              
+            </div>
+        <%  }); %>
+        </div>
     </div>   
 </div>
 
