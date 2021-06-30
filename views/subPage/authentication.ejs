@@ -1,0 +1,28 @@
+<%- include(root + 'partials/header'); -%>
+
+<div class="container">
+    <h1 class="title">User Name & Password</h1>
+    <form class="needs-validation" action="/auth" method="POST">
+        <div class="row row-cols-1 auth-box">
+            <div class="col box">
+                <div class="form-group">            
+                    <label class="form-label" for="userName">User Name</label>
+                    <input class="form-control" name="userName" type="text" required>
+                </div>
+            </div>                                   
+            <div class="col box">
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" name="password" type="password" pattern=".{10-20}" required>
+                </div>
+            </div>
+            <div class="col box">
+                <button class="btn login_signup" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<%- include(root + 'partials/footer', {Copyright: CR}); %> 

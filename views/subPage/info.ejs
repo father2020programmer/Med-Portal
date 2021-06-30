@@ -1,0 +1,155 @@
+<%- include(root + 'partials/header'); -%>
+
+<div class="container">
+    <h1 class="title">Please Enter Your Information</h1>
+    <div class="padding-box">
+        <form class="needs-validation" action="/info" method="POST">
+            <div class="row row-cols-1">                
+                <div class="row row-cols-1 top-box">
+                    <h3 class="third_title">Information</h3>
+                    <div class="col box">
+                        <div class="form-group">            
+                            <label class="form-label" for="ssn">Socail Security Number</label>
+                            <input class="form-control" name="ssn" type="text" maxlength="9" pattern="[0-9]{9}" required>
+                        </div>
+                    </div>
+                    <div class="col box">
+                        <div class="form-group">            
+                            <label class="form-label" for="firstName">First Name</label>
+                            <input class="form-control" name="firstName" type="text" required>
+                        </div>
+                    </div>                   
+                    <div class="col box">
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name</label>
+                            <input class="form-control" name="lastName" type="text" required>
+                        </div>
+                    </div>
+                    <div class="col box">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control" name="email" type="email" required>
+                        </div>
+                    </div>
+                    <div class="col box">
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input class="form-control" name="phone" type="tel" required>
+                        </div>
+                    </div>
+                </div>                
+                <div class="row row-cols-1 box">
+                    <div class="col box">
+                        <label class="form-label" for="address">Address</label>
+                        <input class="form-control" name="address" type="text" required>
+                    </div>
+                </div>
+                <div class="row row-cols-3">
+                    <div class="col-6">
+                        <label class="form-label" for="city">City</label>
+                        <input class="form-control" name="city" type="text" required>                        
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label" for="state">State</label>
+                        <select class="form-select" name="state" required>
+                            <option selected>ST</option>
+                            <option value="AK">AK</option>
+                            <option value="AL">AL</option>
+                            <option value="AR">AR</option>
+                            <option value="AZ">AZ</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DC">DC</option>
+                            <option value="DE">DE</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="IA">IA</option>
+                            <option value="ID">ID</option>
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="KS">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="MA">MA</option>
+                            <option value="MD">MD</option>
+                            <option value="ME">ME</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MO">MO</option>
+                            <option value="MS">MS</option>
+                            <option value="MT">MT</option>
+                            <option value="NC">NC</option>
+                            <option value="ND">ND</option>
+                            <option value="NE">NE</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">JH</option>
+                            <option value="NM">NM</option>
+                            <option value="NV">NV</option>
+                            <option value="NY">NY</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="PR">PR</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VA">VA</option>
+                            <option value="VT">VT</option>
+                            <option value="WA">WA</option>
+                            <option value="WI">WI</option>
+                            <option value="WV">WV</option>
+                            <option value="WY">WY</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="zip">Zip</label>
+                        <input class="form-control" name="zip" type="text" maxlength="5" pattern="[0-9]+{5}" required>
+                    </div>
+                </div>
+                <div class="row row-cols-1 middle-box">
+                    <h3 class="third_title">Emergency Contacts</h3>
+                    <div class="col box">
+                        <label class="form-label" for="eName1">Name</label>
+                        <input class="form-control" name="eName1" type="text" required>
+                    </div>
+                    <div class="row row-cols-2 box">
+                        <div class="col-5">
+                            <label class="form-label" for="relation1">Relation</label>
+                            <input class="form-control" name="relation1" type="text" required>
+                        </div>
+                        <div class="col-7">
+                            <label class="form-label" for="ePhone1">Phone Number</label>
+                            <input class="form-control" name="ePhone1" type="tel" required>
+                        </div>
+                    </div>
+                    <div class="col box">
+                        <label class="form-label" for="eName2">Name</label>
+                        <input class="form-control" name="eName2" type="text" required>
+                    </div>
+                    <div class="row row-cols-2 box">
+                        <div class="col-5">
+                            <label class="form-label" for="relation2">Relation</label>
+                            <input class="form-control" name="relation2" type="text" required>
+                        </div>
+                        <div class="col-7">
+                            <label class="form-label" for="ePhone2">Phone Number</label>
+                            <input class="form-control" name="ePhone2" type="tel" required>
+                        </div>
+                    </div>                     
+                </div>                
+            </div>
+            <input type="hidden" name="objID" value=<%= id %>>  
+            <div class="col box">
+                <button class="btn login_signup" type="submit">Submit</button>
+            </div>             
+        </form>
+    </div>
+</div>
+
+<%- include(root + 'partials/footer', {Copyright: CR}); %> 

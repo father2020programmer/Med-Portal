@@ -15,7 +15,12 @@ const employees = schema({
     userName: { type: schema.Types.ObjectId, ref: 'User'},
     name: String,
     phone: String,
-    address: String,
+    address: {
+        street: String,
+        city: String,
+        state: String,
+        zip: Number
+    },
     position: {
         title: String,
         certification: [{
@@ -24,19 +29,23 @@ const employees = schema({
         }]
     },
     password: String,
-    ssn: String
+    ssn: String,
+    management: Boolean
 });
 
 const patients = schema({
-    userName: { type: schema.Types.ObjectId, ref: 'User'},
+    userID: { type: schema.Types.ObjectId, ref: 'User'},
     ssn: String,
-    name: String,
+    firstName: String,
+    lastName: String,
     contact: {
-        address: String,
-        phone: {
-            main: String,
-            second: String
+        address: {
+            street: String,
+            city: String,
+            state: String,
+            zip: Number
         },
+        phone: String,
         email: String,
     },
     emergency: [{
@@ -86,7 +95,7 @@ const patients = schema({
 const users = schema({
     userName: String,
     password: String,
-    userInfo: String,
+    userInfo: String
 });
 
 

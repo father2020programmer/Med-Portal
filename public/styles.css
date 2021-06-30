@@ -31,6 +31,20 @@ body{
     font-family: 'Libre Baskerville', serif;
 }
 
+.third_title{
+    font-size: 2.5rem;
+    text-decoration: underline;
+}
+
+input:invalid {
+    border: red solid 2px;
+  }
+
+input:valid{
+    border: green solid 2px;
+}
+
+
 
 /* Header */
 
@@ -195,11 +209,6 @@ footer{
     left: -60px;
 }
 
-.cli_second_title{
-    font-size: 3rem;
-    text-decoration: underline;
-}
-
 .cli_hour{
     font-size: 1.5rem;
     font-weight: 550;    
@@ -220,11 +229,6 @@ footer{
     position: relative;
     left: -200px;
     top: -175px;
-}
-
-.cli_third_title{
-    font-size: 3rem;
-    text-decoration: underline;
 }
 
 .services{
@@ -307,5 +311,29 @@ footer{
 .login_signup:hover{
     background-color: #e04ed9;
     color: #f2f2f2;
+}
+
+/* Auth Page */
+
+.auth-box{
+    padding: 10% 40%;
+}
+
+.box{
+    padding: 2% 0;
+}
+
+/* Info Page */
+
+.padding-box{
+    padding: 5% 25%;
+}
+
+.top-box{
+    padding: 0 0 5% 0;
+}
+
+.middle-box{
+    padding: 10% 0 10% 0;
 }
 

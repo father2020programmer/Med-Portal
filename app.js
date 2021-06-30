@@ -9,6 +9,7 @@ const schemas = require('./schemas');
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
 const { json } = require('express');
+const rootPath = "../";
 
 
 /////// App Configure /////// 
@@ -100,9 +101,15 @@ app.get('/myChart', (req, res) => {
     res.render('myChart', {CR: fs.getCopyRights()});
 });
 
-app.get('/login/signUp', (req, res) => {
-    res.render('signUp', {CR: fs.getCopyRights(),});
+app.get('/auth', (req, res) => {
+    res.render('subPage/authentication', { root: rootPath, CR: fs.getCopyRights()});
 });
+
+app.get('/info/:infoID', (req, res) => {
+    let objID = req.params.infoID;   
+    
+    res.render('subPage/info', { root: rootPath, CR: fs.getCopyRights(), id: objID})
+})
 
 app.get('/clinic/:clinicID', (req, res) => {
     const clinicId = req.params.clinicID;
@@ -114,16 +121,91 @@ app.get('/clinic/:clinicID', (req, res) => {
             console.log(err);
         }else {
 
-            res.render('clinic', {CR: fs.getCopyRights(), clinic: clinics, day: arrayDays});
+            res.render('subPage/clinic', {root: rootPath, CR: fs.getCopyRights(), clinic: clinics, day: arrayDays});
         }
     });
+
+});
+
+app.get('/patient/:patID', (req, res) =>{
 
 });
 
 
 ////////POST////////
 
-app.post('/login', (req, res) =>{
+app.post('/auth', (req, res) => {
+    let uName = req.body.userName;
+    let uPass = req.body.password;
+
+    let userNew = new User({
+        userName: uName,
+        password: uPass,
+        userInfo: 'patient'
+    });
+    
+    userNew.save((err) => {
+        let id = userNew._id;
+        if(!err){
+          res.redirect("/info/" + id);
+        }
+      });
+});
+
+app.post('/info', (req, res) =>{
+    let id = req.body.objID;
+    let ssNum = req.body.ssn;
+    let fName = req.body.firstName;
+    let lName = req.body.lastName;
+    let uEmail = req.body.email;
+    let tel = req.body.phone;
+    let str = req.body.address;
+    let ci = req.body.city;
+    let st = req.body.state;
+    let z = req.body.zip;
+    let en1 = req.body.eName1;
+    let er1 = req.body.relation1;
+    let ep1 = req.body.ePhone1;
+    let en2 = req.body.eName2;
+    let er2 = req.body.relation2;
+    let ep2 = req.body.ePhone2; 
+
+    let userInfo = new Patient({
+        userID: id,
+        ssn: ssNum,
+        firstName: fName,
+        lastName: lName,
+        contact: {
+            address:{
+                street: str,
+                city: ci,
+                state: st,
+                zip: z
+            },
+            phone: tel,
+            email: uEmail
+        },
+        emergency:[
+            {
+                name: en1,
+                relation: er1,
+                phone: ep1
+            },
+            {
+                name: en2,
+                relation: er2,
+                phone: ep2
+            }
+        ]
+    });
+
+    userInfo.save(err => {
+        let id = userInfo._id;
+        if(!err){
+            res.redirect("/patient/" + id);
+        }
+    });
+
 
 });
 
