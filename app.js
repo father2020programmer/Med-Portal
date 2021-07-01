@@ -30,7 +30,7 @@ const Patient = new mongoose.model('Patients', schemas.patients);
 const Employee = new mongoose.model('Employees', schemas.employees);
 const User = new mongoose.model('Users', schemas.users);
 
-
+//// Main Paths/////
 app.get('/', (req, res) => {
 
     //const ipApiKey = process.env.IP_API_KEY;
@@ -83,18 +83,10 @@ app.get('/', (req, res) => {
     
 });
 
-
-
-app.get('/locations', (req, res) =>{
-    
+app.get('/locations', (req, res) =>{    
     MD_Location.find({}, (err, foundLocations) => {
         res.render('locations', {CR: fs.getCopyRights(), medLoc: foundLocations});
-    }) 
-    
-});
-
-app.get('/services', (req, res) =>{
-    res.render('services', {CR: fs.getCopyRights()});
+    });    
 });
 
 app.get('/myChart', (req, res) => {
@@ -105,10 +97,14 @@ app.get('/auth', (req, res) => {
     res.render('subPage/authentication', { root: rootPath, CR: fs.getCopyRights()});
 });
 
+
+
+///// Sub Paths /////
+
 app.get('/info/:infoID', (req, res) => {
     let objID = req.params.infoID;   
     
-    res.render('subPage/info', { root: rootPath, CR: fs.getCopyRights(), id: objID})
+    res.render('subPage/info', { root: rootPath, CR: fs.getCopyRights(), id: objID});
 })
 
 app.get('/clinic/:clinicID', (req, res) => {
@@ -128,7 +124,16 @@ app.get('/clinic/:clinicID', (req, res) => {
 });
 
 app.get('/patient/:patID', (req, res) =>{
-
+    let pID = req.params.patID;
+    
+    Patient.find({_id: pID}, (err, person) => {
+        if(err){
+            console.log(err);
+        }else{
+            console.log(person);
+            res.render('patient/home', {root: rootPath, CR: fs.getCopyRights(), patient: person});
+        }
+    });    
 });
 
 

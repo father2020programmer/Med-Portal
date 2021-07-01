@@ -1,0 +1,36 @@
+<header class="container">
+
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex flex-row" href="/">
+                <img class="logo" src="/images/Logo(1).png" alt="logo">
+                <H1 class='comp-name'>MED PORTAL</H1>
+            </a>
+        </div>
+    </nav>
+    <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link link" href="/patient/"<%= patient[0]._id %>>Home</a>
+        </li>        
+        <li class="nav-item">
+            <a class="nav-link link" href="/patient/messages/"<%= patient[0]._id %>>Messages</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link" href="/patient/account/"<%= patient[0]._id %>>Account Info</a>
+        </li>
+        <li class="nav-item dropdown link">
+            <a class="nav-link dropdown-toggle link" href="#" 
+            id="records" role="button" data-bs-toggle="dropdown" 
+            aria-expanded="false">Records</a>
+            <ul class="dropdown-menu" aria-labelledby="records">
+                <li><a class="dropdown-item" href="/patient/docNotes/"<%= patient[0]._id %>>Doctors Notes</a></li>
+                <li><a class="dropdown-item" href="/patient/scans/"<%= patient[0]._id %>>Scans</a></li>
+                <li><a class="dropdown-item" href="/patient/labs/"<%= patient[0]._id %>>Labs</a></li>
+                <li><a class="dropdown-item" href="/patient/meds/"<%= patient[0]._id %>>Medications</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link" href="/">Log Out</a>
+        </li>
+    </ul>
+</header>

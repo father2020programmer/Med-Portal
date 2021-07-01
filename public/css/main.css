@@ -144,98 +144,6 @@ footer{
     margin: 2rem 0 1rem 0;
 }
 
-/* Clinic Page */
-
-.cli_title_panel{
-    width: 27rem;
-    height: auto;
-    padding: 3rem 0 3rem 2rem;
-    margin-left: 5rem;
-    position: relative;
-}
-
-
-.marker{
-    font-size: 2rem;
-}
-
-.cli_add{
-    position: relative;
-    left: 40px;
-    top: -30px;
-}
-
-.cli_map{
-    width: 35rem;
-    height: auto;
-    border: 4px solid #9e4ee0;
-    margin-right: 5rem;
-    float: right;
-    position: relative;
-    top: -10rem;
-    z-index: 2;
-}
-
-.cli_map:hover{
-    opacity: 0.4;
-}
-
-.directions{
-    width: 33rem;
-    height: 15rem;
-    border: 4px solid;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    left: 675px;
-    top: -135px;
-    color: #e04ed9;
-}
-
-.directions h4{
-    font-size: 2rem;
-    font-family: 'Libre Baskerville', serif;
-}
-
-.cli_second_panel{
-    width: 40rem;
-    height: auto;
-    padding: 1rem 0 3rem 2rem;
-    margin-left: 5rem;
-    text-align: center;
-    position: relative;
-    top: -100px;
-    left: -60px;
-}
-
-.cli_hour{
-    font-size: 1.5rem;
-    font-weight: 550;    
-    margin-top: 1rem;
-}
-
-.cli_service_img{
-    width: 25rem;
-    height: auto;
-    border: 3px solid #9e4ee0;
-    margin-left: 4rem;
-}
-
-.cli_services{
-    width: 30rem;
-    height: auto;
-    float: right;
-    position: relative;
-    left: -200px;
-    top: -175px;
-}
-
-.services{
-    font-size: 2rem;
-    font-weight: 550;
-}
-
 /* MyChart page */
 
 .first-panel{
@@ -313,27 +221,5 @@ footer{
     color: #f2f2f2;
 }
 
-/* Auth Page */
 
-.auth-box{
-    padding: 10% 40%;
-}
-
-.box{
-    padding: 2% 0;
-}
-
-/* Info Page */
-
-.padding-box{
-    padding: 5% 25%;
-}
-
-.top-box{
-    padding: 0 0 5% 0;
-}
-
-.middle-box{
-    padding: 10% 0 10% 0;
-}
 

@@ -55,12 +55,15 @@ const patients = schema({
     }],
     records: {
         drNotes: [{
-        date: String,
-        notes: String,
+            type: String,        
+            date: String,
+            notes: String,
         vitals: {
             bpm: Number,
             o2: Number,
-            bp: String
+            bp: String,
+            hieght: String,
+            wieght: String
         }
         }],
         techNotes: [{
@@ -76,14 +79,6 @@ const patients = schema({
             type: String,
             date: String,
             results: String
-        }],
-        specilty:[{
-            type: String,
-            doctor:{
-                name: String,
-                notes: String
-            },
-            date: String,
         }],
         medications: [{
             type: String,
