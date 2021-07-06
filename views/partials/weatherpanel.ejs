@@ -1,0 +1,36 @@
+
+<div class="wet-panel">
+    <div class='wet-title'>
+        <h3><%= cityName %> </h3>
+    </div>
+    <div class="forcast-panel">
+        <div class="day-cast">
+            <p class="wet-date"><%= dayDate.month %>/<%= dayDate.day %></p>
+            <img class="cast-img" src="http://openweathermap.org/img/wn/<%= todayI %>@2x.png" alt="weather-icon">
+            <div class="wet-info">
+                <p ><%= todayT %>&#8457; </p>
+            </div>                
+        </div>
+        <div class="day-cast">
+            <p class="wet-date"><%= dayDate.month %>/<%= dayDate.day + 1 %> </p>
+            <img class="cast-img" src="http://openweathermap.org/img/wn/<%= tomI %>@2x.png" alt="weather-icon">
+            <div class="wet-info">
+                <p><%= tomT %>&#8457; </p>
+            </div> 
+        </div>
+        <div class="day-cast">
+            <p class="wet-date"><%= dayDate.month %>/<%= dayDate.day + 2 %> </p>
+            <img class="cast-img" src="http://openweathermap.org/img/wn/<%= next1I %>@2x.png" alt="weather-icon">
+            <div class="wet-info">
+                <p><%= next1T %>&#8457; </p>
+            </div>                 
+        </div>
+        <div class="day-cast">
+            <p class="wet-date"><%= dayDate.month %>/<%= dayDate.day + 3 %> </p>
+            <img class="cast-img" src="http://openweathermap.org/img/wn/<%= next2I %>@2x.png" alt="weather-icon"> 
+            <div class="wet-info">
+                <p><%= next2T %>&#8457; </p>
+            </div>                
+        </div>
+    </div>
+</div>

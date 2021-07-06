@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
-const schema = mongoose.Schema;
 
-const locations = schema({
+const locations = new mongoose.Schema({
     name: String,
     address: String,
     hours: Array,
@@ -11,8 +10,7 @@ const locations = schema({
     services: Array
 }, {collection: 'MD_Location'});
 
-const employees = schema({
-    userName: { type: schema.Types.ObjectId, ref: 'User'},
+const employees = new mongoose.Schema({
     name: String,
     phone: String,
     address: {
@@ -33,8 +31,14 @@ const employees = schema({
     management: Boolean
 });
 
-const patients = schema({
-    userID: { type: schema.Types.ObjectId, ref: 'User'},
+const users = new mongoose.Schema({
+    username: String,
+    password: String,
+    userID: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
+    docID: {type: mongoose.Schema.Types.ObjectId, ref: 'Employee'}
+});
+
+const patients = new mongoose.Schema({
     ssn: String,
     firstName: String,
     lastName: String,
@@ -86,13 +90,5 @@ const patients = schema({
             date: String
         }]}
 });
-
-const users = schema({
-    userName: String,
-    password: String,
-    userInfo: String
-});
-
-
 
 module.exports = {locations, employees, patients, users};

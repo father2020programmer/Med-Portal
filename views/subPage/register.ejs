@@ -4,7 +4,7 @@
 
 <div class="container">
     <h1 class="title">User Name & Password</h1>
-    <form class="needs-validation" action="/auth" method="POST">
+    <form class="needs-validation" action="/register" method="POST">
         <div class="row row-cols-1 auth-box">
             <div class="col box">
                 <div class="form-group">            
@@ -22,6 +22,7 @@
                 <button class="btn login_signup" type="submit">Submit</button>
             </div>
         </div>
+        <input type="hidden" name="objID" value=<%= patientID %>>
     </form>
 </div>
 

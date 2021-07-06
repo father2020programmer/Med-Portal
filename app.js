@@ -4,11 +4,15 @@ const express = require('express');
 const ejs = require('ejs');
 const https = require('https');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const pLocalMongoose = require('passport-local-mongoose');
+const fetch = require('node-fetch');
 const fs = require('./functions');
 const schemas = require('./schemas');
-const mongoose = require('mongoose');
-const fetch = require('node-fetch');
 const { json } = require('express');
+const { Passport } = require('passport');
 const rootPath = "../";
 
 
@@ -18,11 +22,21 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
+//////Authentication////////
+app.use(session({
+    secret:"First full-stack project.",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 /////DataBase Config////
 mongoose.set('useFindAndModify', false);
-mongoose.set('useUnifiedTopology', true)
+mongoose.set('useUnifiedTopology', true);
+mongoose.set('useCreateIndex', true);
 mongoose.connect("mongodb+srv://Randy_Wilkins:Test1234@cluster0.td7ri.mongodb.net/Med_Portal", {useNewUrlParser: true});
+schemas.users.plugin(pLocalMongoose);
 
 ///// Set up Mongoose models/////
 const MD_Location = new mongoose.model('MD_Location', schemas.locations);
@@ -30,22 +44,19 @@ const Patient = new mongoose.model('Patients', schemas.patients);
 const Employee = new mongoose.model('Employees', schemas.employees);
 const User = new mongoose.model('Users', schemas.users);
 
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 //// Main Paths/////
 app.get('/', (req, res) => {
-
-    //const ipApiKey = process.env.IP_API_KEY;
-    //const ipUrl = 'https://api.ipgeolocation.io/ipgeo?apiKey=' + ipApiKey;
-
-    function requestIP(url){
-        return fetch(url)
-        .then(r => r.json())
-        .then(json => json);
-    }   
+    const ipUrl = 'http://ip-api.com/json/';    
     
-    requestIP(ipUrl).then(data =>{
+    fs.requestIP(ipUrl).then(data =>{
         const part ='hourly,alerts,minutely';
-        const lat = data.latitude;
-        const lon = data.longitude;
+        const lat = data.lat;
+        const lon = data.lon;
         const name = data.city;
         const apiKey = process.env.WEATHER_API_KEY;
         const units = "imperial";
@@ -64,21 +75,16 @@ app.get('/', (req, res) => {
                 CR: fs.getCopyRights(), 
                 dayDate: todayDate,
                 cityName: name, 
-                todayT: todayW.temp,
+                todayT: Math.floor(todayW.temp),
                 todayI: todayW.weather[0].icon,
-                todayD: todayW.weather[0].description,
-                tomT: tomW.temp.day,
+                tomT: Math.floor(tomW.temp.day),
                 tomI: tomW.weather[0].icon,
-                tomD: tomW.weather[0].description,
-                next1T: n1Day.temp.day,
-                next1I: n1Day.weather[0].icon,
-                next1D: n1Day.weather[0].description,
-                next2T: n2Day.temp.day,
-                next2I: n2Day.weather[0].icon,
-                next2D: n2Day.weather[0].description,                
+                next1T: Math.floor(n1Day.temp.day),
+                next1I: n1Day.weather[0].icon,                
+                next2T: Math.floor(n2Day.temp.day),
+                next2I: n2Day.weather[0].icon,               
             });
         });
-
     });
     
 });
@@ -93,19 +99,24 @@ app.get('/myChart', (req, res) => {
     res.render('myChart', {CR: fs.getCopyRights()});
 });
 
-app.get('/auth', (req, res) => {
-    res.render('subPage/authentication', { root: rootPath, CR: fs.getCopyRights()});
+app.get('/info', (req, res) => {
+    res.render('subPage/info', { root: rootPath, CR: fs.getCopyRights()});
 });
 
-
+app.get('/patient', (req, res) =>{
+    if(req.isAuthenticated()){
+        res.render('patient/home', {root: rootPath, CR: fs.getCopyRights()});
+    } else {
+        res.redirect('/myChart');
+    }   
+    
+});
 
 ///// Sub Paths /////
-
-app.get('/info/:infoID', (req, res) => {
-    let objID = req.params.infoID;   
-    
-    res.render('subPage/info', { root: rootPath, CR: fs.getCopyRights(), id: objID});
-})
+app.get('/register/:rigisterID', (req, res) => {
+    let id = req.params.rigisterID;
+    res.render('subPage/register', { root: rootPath, CR: fs.getCopyRights(), patientID: id});
+});
 
 app.get('/clinic/:clinicID', (req, res) => {
     const clinicId = req.params.clinicID;
@@ -123,42 +134,28 @@ app.get('/clinic/:clinicID', (req, res) => {
 
 });
 
-app.get('/patient/:patID', (req, res) =>{
-    let pID = req.params.patID;
-    
-    Patient.find({_id: pID}, (err, person) => {
-        if(err){
-            console.log(err);
-        }else{
-            console.log(person);
-            res.render('patient/home', {root: rootPath, CR: fs.getCopyRights(), patient: person});
-        }
-    });    
-});
+
 
 
 ////////POST////////
 
-app.post('/auth', (req, res) => {
-    let uName = req.body.userName;
-    let uPass = req.body.password;
+app.post('/register', (req, res) => {
+    let id = req.body.objID;
 
-    let userNew = new User({
-        userName: uName,
-        password: uPass,
-        userInfo: 'patient'
-    });
-    
-    userNew.save((err) => {
-        let id = userNew._id;
-        if(!err){
-          res.redirect("/info/" + id);
+    User.register({username: req.body.userName}, req.body.password, (err, user) => {
+        if(err){
+            console.log(err);
+            res.redirect("/register" + id);
+            alert('Sorry something went wrong.');
+        }else{
+            passport.authenticate('local')(req, res, () => {
+                res.redirect("/patient");
+            });
         }
-      });
+    });
 });
 
 app.post('/info', (req, res) =>{
-    let id = req.body.objID;
     let ssNum = req.body.ssn;
     let fName = req.body.firstName;
     let lName = req.body.lastName;
@@ -176,7 +173,6 @@ app.post('/info', (req, res) =>{
     let ep2 = req.body.ePhone2; 
 
     let userInfo = new Patient({
-        userID: id,
         ssn: ssNum,
         firstName: fName,
         lastName: lName,
@@ -204,10 +200,10 @@ app.post('/info', (req, res) =>{
         ]
     });
 
-    userInfo.save(err => {
-        let id = userInfo._id;
+    userInfo.save(err => {        
         if(!err){
-            res.redirect("/patient/" + id);
+            let id = userInfo._id;
+            res.redirect("/register/" + id);
         }
     });
 

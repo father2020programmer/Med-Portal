@@ -1,44 +1,37 @@
 <%- include('partials/header'); -%>
 <%- include('partials/mainLink');  -%> 
 
-
-
 <div class="container">
-    <div class="wet-panel">
-        <div class='wet-title'>
-            <h3><%= cityName %> </h3>
-        </div>
-        <div class="forcast-panel">
-            <div class="day-cast">
-                <h4><%= dayDate.month %>, <%= dayDate.day %></h4>
-                <img class="cast-img" src="http://openweathermap.org/img/wn/<%= todayI %>@2x.png" alt="weather-icon"> 
-                <p><%= todayT %> </p>
-                <p><%= todayD %> </p>
-            </div>
-            <div class="day-cast">
-                <h4><%= dayDate.month %>, <%= dayDate.day + 1 %> </h4>
-                <img class="cast-img" src="http://openweathermap.org/img/wn/<%= tomI %>@2x.png" alt="weather-icon"> 
-                <p><%= tomT %> </p>
-                <p><%= tomD %> </p>
-            </div>
-            <div class="day-cast">
-                <h4><%= dayDate.month %>, <%= dayDate.day + 2 %> </h4>
-                <img class="cast-img" src="http://openweathermap.org/img/wn/<%= next1I %>@2x.png" alt="weather-icon"> 
-                <p><%= next1T %> </p>
-                <p><%= next1D %> </p>
-            </div>
-            <div class="day-cast">
-                <h4><%= dayDate.month %>, <%= dayDate.day + 3 %> </h4>
-                <img class="cast-img" src="http://openweathermap.org/img/wn/<%= next2I %>@2x.png" alt="weather-icon"> 
-                <p><%= next2T %> </p>
-                <p><%= next2D %> </p>
-            </div>
-        </div>
+    <h1 class="title">Welcome to Med Portal!</h1>
+    <%- include('partials/weatherpanel');  -%>
+    
+    <div class="intro-panel">
+        <h3 class="intro-title third_title">Why Med Portal fits you.</h3>
+        <p class="intro-state">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
+            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>     
+    <div class="intro-panel">
+        <h3 class="intro-title third_title"> Family Friendly</h3>
+        <p class="family-state">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+            ut labore et dolore magna aliqua. Pulvinar etiam non quam lacus suspendisse faucibus interdum. 
+            Sed tempus urna et pharetra pharetra massa massa ultricies. Turpis tincidunt id aliquet 
+            risus feugiat in ante. Dictum at tempor commodo ullamcorper. Quam viverra orci sagittis eu. 
+            Quis hendrerit dolor magna eget est lorem ipsum dolor. Justo eget magna fermentum iaculis. 
+            Turpis cursus in hac habitasse platea dictumst quisque sagittis. Dignissim diam quis enim 
+            lobortis scelerisque fermentum dui. Nam libero justo laoreet sit amet cursus sit amet. 
+            Sollicitudin aliquam ultrices sagittis orci. Diam sit amet nisl suscipit adipiscing bibendum 
+            est ultricies. Integer vitae justo eget magna fermentum iaculis eu non. Scelerisque felis 
+            imperdiet proin fermentum leo vel orci. Nec feugiat nisl pretium fusce.
+        </p>
     </div>
-    <div class="home-message">
-        <h2>The Med Portal</h2>
-        <p>Welcome to the Med Portal for all your medical needs covered!</p>
-    </div>
+    <div class="home-img">
+        <img src="/images/family-using-computer.jpg" alt="family computer">
+    </div>           
 </div>
 
 <%- include('partials/footer', {Copyright: CR}); %> 
