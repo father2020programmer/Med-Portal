@@ -2,19 +2,20 @@
 require('dotenv').config();
 const express = require('express');
 const ejs = require('ejs');
-const https = require('https');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
-const pLocalMongoose = require('passport-local-mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
 const fetch = require('node-fetch');
-const fs = require('./functions');
-const schemas = require('./schemas');
-const { json } = require('express');
-const { Passport } = require('passport');
-const rootPath = "../";
 
+////// Required Paths////
+const rootPath = "../";
+const fs = require('./functions');
+const MD_Location = require('./models/clinics');
+const Employee = require('./models/employee');
+const Patient = require('./models/patient');
+const patient = require('./models/patient');
 
 /////// App Configure /////// 
 const app = express();
@@ -23,12 +24,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
 //////Authentication////////
+app.use(passport.initialize());
 app.use(session({
     secret:"First full-stack project.",
     resave: false,
     saveUninitialized: false
 }));
-app.use(passport.initialize());
 app.use(passport.session());
 
 /////DataBase Config////
@@ -36,17 +37,17 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useCreateIndex', true);
 mongoose.connect("mongodb+srv://Randy_Wilkins:Test1234@cluster0.td7ri.mongodb.net/Med_Portal", {useNewUrlParser: true});
-schemas.users.plugin(pLocalMongoose);
 
-///// Set up Mongoose models/////
-const MD_Location = new mongoose.model('MD_Location', schemas.locations);
-const Patient = new mongoose.model('Patients', schemas.patients);
-const Employee = new mongoose.model('Employees', schemas.employees);
-const User = new mongoose.model('Users', schemas.users);
-
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+/////Set Passport/////
+passport.use(Patient.createStrategy());
+passport.serializeUser((patient, done) =>{
+    done(null, patient.id);
+});
+passport.deserializeUser((id, done) => {
+    Patient.findById(id, (err, patient) => {
+        done(err, patient);
+    })
+});
 
 
 //// Main Paths/////
@@ -99,16 +100,12 @@ app.get('/myChart', (req, res) => {
     res.render('myChart', {CR: fs.getCopyRights()});
 });
 
-app.get('/info', (req, res) => {
-    res.render('subPage/info', { root: rootPath, CR: fs.getCopyRights()});
+app.get('/checkaccess', (req, res) => {
+    res.render('subPage/checkaccess', { root: rootPath, CR: fs.getCopyRights()});
 });
 
 app.get('/patient', (req, res) =>{
-    if(req.isAuthenticated()){
-        res.render('patient/home', {root: rootPath, CR: fs.getCopyRights()});
-    } else {
-        res.redirect('/myChart');
-    }   
+    res.render('patient/home', { root: rootPath, CR: fs.getCopyRights()});   
     
 });
 
@@ -140,79 +137,57 @@ app.get('/clinic/:clinicID', (req, res) => {
 ////////POST////////
 
 app.post('/register', (req, res) => {
-    let id = req.body.objID;
+    let patientID = req.body.objID;
 
-    User.register({username: req.body.userName}, req.body.password, (err, user) => {
+    Patient.register(({username: req.body.username}), req.body.password, (err, u) =>{
         if(err){
             console.log(err);
-            res.redirect("/register" + id);
-            alert('Sorry something went wrong.');
-        }else{
-            passport.authenticate('local')(req, res, () => {
-                res.redirect("/patient");
-            });
         }
+
+        Patient.findByIdAndUpdate({username: req.body.username}, (err, patient) => {
+            if(err){
+                console.log(err);
+            }
+
+            passport.authenticate('local')(req,res, () =>{
+                res.redirect('patient');
+            });
+
+        });
+        
     });
+
+    
+     
 });
 
-app.post('/info', (req, res) =>{
-    let ssNum = req.body.ssn;
-    let fName = req.body.firstName;
-    let lName = req.body.lastName;
-    let uEmail = req.body.email;
-    let tel = req.body.phone;
-    let str = req.body.address;
-    let ci = req.body.city;
-    let st = req.body.state;
-    let z = req.body.zip;
-    let en1 = req.body.eName1;
-    let er1 = req.body.relation1;
-    let ep1 = req.body.ePhone1;
-    let en2 = req.body.eName2;
-    let er2 = req.body.relation2;
-    let ep2 = req.body.ePhone2; 
+app.post('/checkaccess', (req, res) =>{ 
+    let month = req.body.month;
+    let day = req.body.day;
+    let year = req.body.year;   
+    let s1 = req.body.ssn1;
+    let s2 = req.body.ssn2;
+    let s3 = req.body.ssn3;    
+    let c1 = req.body.code1;
+    let c2 = req.body.code2;
 
-    let userInfo = new Patient({
-        ssn: ssNum,
-        firstName: fName,
-        lastName: lName,
-        contact: {
-            address:{
-                street: str,
-                city: ci,
-                state: st,
-                zip: z
-            },
-            phone: tel,
-            email: uEmail
-        },
-        emergency:[
-            {
-                name: en1,
-                relation: er1,
-                phone: ep1
-            },
-            {
-                name: en2,
-                relation: er2,
-                phone: ep2
-            }
-        ]
-    });
+    let dob = month + '/' + day + '/' + year;
+    let ssn = s1 + '-' + s2 + '-' + s3;
+    let code = c1 + '-' + c2;
 
-    userInfo.save(err => {        
-        if(!err){
-            let id = userInfo._id;
-            res.redirect("/register/" + id);
+    Patient.find({ssn: ssn}, (err, p) => {
+        if(p[0].dateOfBirth == dob && p[0].accessCode == code){
+            res.redirect('/register/' + p[0]._id);
+        } else{
+            console.log(err);            
+            res.redirect('/myChart');
         }
     });
-
-
 });
 
 
 ///// App Server/////
-app.listen(3000, () => {
-    console.log("Server is Running");
-});
+app.listen(process.env.PORT || 3000, function() {
+    console.log("Server started on port 3000");
+  });
  

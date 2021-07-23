@@ -1,0 +1,77 @@
+<%- include(root + 'partials/header'); -%>
+<%- include(root + 'partials/mainLink'); -%> 
+
+
+<div class="container">
+    <h1 class="title">Please Identify Yourself</h1>
+    <div class="padding-box">
+        <form class="form-section" action="/checkaccess" method="POST">
+            <fieldset class="panel-DOB">
+                <legend>Date of Birth</legend>
+                <p>Enter your birth date as the format shown.</p>
+                <div class="row g-3 seg1">
+                    <div class="col">
+                        <label class="hidden" for="month">Birth Month</label>
+                        <input type="text" name="month" maxlength="2" autocomplete="off">
+                        <p class="helptext">MM</p>
+                    </div>
+                    <span class="seprator">/</span>
+                    <div class="col">
+                        <label class="hidden" for="day">Birth Day</label>
+                        <input type="text" name="day" maxlength="2" autocomplete="off">
+                        <p class="helptext">DD</p>
+                    </div>
+                    <span class="seprator">/</span>
+                    <div class="col">
+                        <label class="hidden" for="year">Birth Year</label>
+                        <input type="text" name="year" maxlength="4" autocomplete="off">
+                        <p class="helptext">YYYY</p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="ss-number">
+                <legend>Your Social Securtiy Number</legend>
+                <p>Enter your SSN as the format shown.</p>
+                <div class="row g-3 seg2">
+                    <div class="col">
+                        <label class="hidden" for="ssn1">First 3 Numbers</label>
+                        <input type="password" name="ssn1" maxlength="3" autocomplete="off">
+                        <p class="helptext">***</p>
+                    </div>
+                    <span class="seprator">-</span>
+                    <div class="col">
+                        <label class="hidden" for="ssn2">Second 2 Numbers</label>
+                        <input type="password" name="ssn2" maxlength="2" autocomplete="off">
+                        <p class="helptext">**</p>
+                    </div>
+                    <span class="seprator">-</span>
+                    <div class="col">
+                        <label class="hidden" for="ssn3">Last 4 Numbers</label>
+                        <input type="password" name="ssn3" maxlength="4" autocomplete="off">
+                        <p class="helptext">****</p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="active-code">
+                <legend>Your Activation Code</legend>
+                <p>The activation code given to you on your last visit.</p>
+                <div class="row g-4">
+                    <div class="col">
+                        <label for="code1">First Code Numbers</label>
+                        <input type="text" name="code1" maxlength="4" autocomplete="off">
+                        <p class="helptext">****</p>
+                    </div>
+                    <span class="seprator">-</span>
+                    <div class="col">
+                        <label for="code2">Last Code Numbers</label>
+                        <input type="text" name="code2" maxlength="4" autocomplete="off">
+                        <p class="helptext">****</p>
+                    </div>
+                </div>
+            </fieldset>
+            <button class="btn login_signup" type="submit"></button>
+        </form>
+    </div>
+</div>
+
+<%- include(root + 'partials/footer', {Copyright: CR}); %> 
